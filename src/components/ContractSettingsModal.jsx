@@ -1,88 +1,57 @@
 import React, { useState } from 'react';
-import { getContractAddress, setCustomContractAddress, RPC_URL, EXPLORER_URL, CHAIN_ID } from '../services/contractConfig.js';
-import { X, Settings, Terminal, Check, Globe, ShieldCheck, RefreshCw, ExternalLink } from 'lucide-react';
+import { getContractAddress, RPC_URL, EXPLORER_URL, CHAIN_ID, NETWORK_NAME } from '../services/contractConfig.js';
+import { X, ShieldCheck, Copy, Check, ExternalLink, Cpu } from 'lucide-react';
 
-export default function ContractSettingsModal({ onClose, onAddressUpdated }) {
-  const [addressInput, setAddressInput] = useState(getContractAddress());
-  const [saved, setSaved] = useState(false);
+export default function ContractSettingsModal({ onClose }) {
+  const contractAddress = getContractAddress();
+  const [copied, setCopied] = useState(false);
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    setCustomContractAddress(addressInput.trim());
-    setSaved(true);
-    if (onAddressUpdated) onAddressUpdated();
-    setTimeout(() => {
-      setSaved(false);
-      onClose();
-    }, 900);
-  };
-
-  const handleReset = () => {
-    setCustomContractAddress('');
-    setAddressInput(getContractAddress());
-    if (onAddressUpdated) onAddressUpdated();
+  const handleCopy = () => {
+    navigator.clipboard.writeText(contractAddress);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      zIndex: 100,
-      background: 'rgba(5, 7, 10, 0.75)',
-      backdropFilter: 'blur(8px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '1rem',
-    }}>
-      <div className="glass-card" style={{
-        width: '100%',
-        maxWidth: '540px',
-        padding: '1.75rem',
-        position: 'relative',
-        background: '#12151e',
-        border: '1px solid var(--border-default)',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.8)',
-      }}>
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute',
-            top: '1.25rem',
-            right: '1.25rem',
-            background: 'transparent',
-            border: 'none',
-            color: 'var(--text-muted)',
-            cursor: 'pointer',
-            padding: '4px',
-          }}
-        >
-          <X size={20} />
-        </button>
-
+    <div className="modal-overlay" onClick={onClose}>
+      <div 
+        className="modal-card" 
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: '540px', width: '92%' }}
+      >
         {/* Header */}
-        <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '10px',
-            background: 'var(--purple-bg)',
-            color: 'var(--purple-primary)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <Settings size={22} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '10px',
+              background: 'rgba(52, 211, 153, 0.12)',
+              border: '1px solid rgba(52, 211, 153, 0.3)',
+              color: 'var(--color-success)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+              <ShieldCheck size={22} />
+            </div>
+            <div>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 800 }}>Verified Contract Details</h3>
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                {NETWORK_NAME} (Chain ID {CHAIN_ID}) Immutable Smart Contract
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>Network & Contract Configuration</h3>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-              Bohr Testnet (Chain ID {CHAIN_ID}) Live Node Settings
-            </p>
-          </div>
+
+          <button 
+            onClick={onClose}
+            style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', padding: '4px' }}
+          >
+            <X size={20} />
+          </button>
         </div>
 
-        {/* Network Info Pills */}
+        {/* Network Info Grid */}
         <div style={{
           background: 'var(--bg-input)',
           border: '1px solid var(--border-subtle)',
@@ -96,7 +65,7 @@ export default function ContractSettingsModal({ onClose, onAddressUpdated }) {
         }}>
           <div>
             <span style={{ color: 'var(--text-dim)', display: 'block', marginBottom: '2px' }}>Network:</span>
-            <span style={{ fontWeight: 600 }}>Bohr Testnet</span>
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{NETWORK_NAME}</span>
           </div>
           <div>
             <span style={{ color: 'var(--text-dim)', display: 'block', marginBottom: '2px' }}>Chain ID:</span>
@@ -112,84 +81,90 @@ export default function ContractSettingsModal({ onClose, onAddressUpdated }) {
           </div>
         </div>
 
-        {/* Contract Address Form */}
-        <form onSubmit={handleSave} style={{ marginBottom: '1.25rem' }}>
-          <div className="form-group">
-            <label className="form-label">
-              <span>PaymentLink Contract Address</span>
-              {addressInput && (
-                <a
-                  href={`${EXPLORER_URL}/address/${addressInput}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ color: 'var(--purple-primary)', fontSize: '0.75rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '3px' }}
-                >
-                  <span>Explorer</span>
-                  <ExternalLink size={11} />
-                </a>
-              )}
-            </label>
-            <input
-              type="text"
-              value={addressInput}
-              onChange={(e) => setAddressInput(e.target.value)}
-              placeholder="0x..."
-              className="form-input font-mono"
-              style={{ fontSize: '0.85rem' }}
-            />
-            <span style={{ fontSize: '0.74rem', color: 'var(--text-dim)' }}>
-              Set via <code>npm run deploy</code> or paste any deployed PaymentLink contract address here.
+        {/* Contract Address Card */}
+        <div style={{
+          background: 'rgba(192, 132, 252, 0.05)',
+          border: '1px solid rgba(192, 132, 252, 0.25)',
+          borderRadius: 'var(--radius-md)',
+          padding: '1rem',
+          marginBottom: '1.25rem',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.45rem' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--purple-primary)' }}>
+              PAYMENTLINK CONTRACT (OFFICIAL)
+            </span>
+            <span style={{
+              fontSize: '0.68rem',
+              fontWeight: 700,
+              padding: '0.15rem 0.5rem',
+              borderRadius: '999px',
+              background: 'rgba(52, 211, 153, 0.15)',
+              color: 'var(--color-success)',
+              border: '1px solid rgba(52, 211, 153, 0.3)',
+            }}>
+              Verified on Explorer
             </span>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.75rem' }}>
-            <button type="submit" className="btn-primary" style={{ flex: 1 }}>
-              {saved ? (
-                <>
-                  <Check size={16} />
-                  <span>Saved!</span>
-                </>
-              ) : (
-                <span>Save Address</span>
-              )}
-            </button>
-            <button
-              type="button"
-              onClick={handleReset}
-              className="btn-secondary"
-              title="Reset to default from build"
-            >
-              <RefreshCw size={15} />
-            </button>
-          </div>
-        </form>
-
-        {/* Deploy Guide Note */}
-        <div style={{
-          background: 'rgba(192, 132, 252, 0.04)',
-          border: '1px solid rgba(192, 132, 252, 0.2)',
-          borderRadius: 'var(--radius-md)',
-          padding: '0.9rem',
-          fontSize: '0.82rem',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: 'var(--purple-light)', fontWeight: 700, marginBottom: '0.35rem' }}>
-            <Terminal size={15} />
-            <span>Deploying from your Terminal</span>
-          </div>
-          <p style={{ color: 'var(--text-muted)', lineHeight: '1.45', marginBottom: '0.5rem' }}>
-            To deploy your own instance of <code>PaymentLink.sol</code> with your private key:
-          </p>
-          <pre style={{
+          <div style={{
             background: 'var(--bg-darkest)',
-            padding: '0.5rem 0.75rem',
-            borderRadius: '6px',
-            fontSize: '0.76rem',
-            color: '#a78bfa',
-            overflowX: 'auto',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: 'var(--radius-sm)',
+            padding: '0.65rem 0.85rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '0.5rem',
           }}>
-            1. Add PRIVATE_KEY=0x... to your .env file{"\n"}
-            2. Run: npm run deploy
-          </pre>
+            <span className="font-mono" style={{ fontSize: '0.85rem', color: '#ffffff', wordBreak: 'break-all' }}>
+              {contractAddress}
+            </span>
+            <button
+              onClick={handleCopy}
+              style={{
+                background: copied ? 'rgba(52, 211, 153, 0.2)' : 'rgba(255, 255, 255, 0.06)',
+                border: 'none',
+                color: copied ? 'var(--color-success)' : 'var(--text-muted)',
+                padding: '6px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                flexShrink: 0,
+              }}
+              title="Copy Address"
+            >
+              {copied ? <Check size={16} /> : <Copy size={16} />}
+            </button>
+          </div>
+        </div>
+
+        {/* View on Explorer Link Button */}
+        <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.5rem' }}>
+          <a
+            href={`${EXPLORER_URL}/address/${contractAddress}#code`}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary"
+            style={{
+              flex: 1,
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              padding: '0.75rem 1rem',
+              fontSize: '0.86rem',
+              fontWeight: 600,
+            }}
+          >
+            <span>View Verified Source & ABI on Explorer</span>
+            <ExternalLink size={15} />
+          </a>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.74rem', color: 'var(--text-dim)' }}>
+          This contract is immutable and locked on BotChain Mainnet. No client overrides permitted.
         </div>
       </div>
     </div>

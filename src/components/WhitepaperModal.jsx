@@ -15,7 +15,7 @@ import { EXPLORER_URL } from '../services/contractConfig.js';
 
 export default function WhitepaperModal({ onClose, contractAddress }) {
   return (
-    <div className="modal-overlay" onClick={onClose} style={{ zIndex: 100 }}>
+    <div className="modal-overlay" onClick={onClose}>
       <div 
         className="modal-card" 
         onClick={(e) => e.stopPropagation()}
@@ -39,24 +39,23 @@ export default function WhitepaperModal({ onClose, contractAddress }) {
           background: 'rgba(255, 255, 255, 0.02)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '10px',
-              background: 'linear-gradient(135deg, #c084fc 0%, #7e22ce 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#0d0f14'
-            }}>
-              <FileText size={20} strokeWidth={2.4} />
-            </div>
+            <img 
+              src="/botchain_logo.jpeg" 
+              alt="BOT Chain" 
+              style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '10px',
+                border: '1.5px solid rgba(52, 211, 153, 0.4)',
+                objectFit: 'cover'
+              }}
+            />
             <div>
               <div style={{ fontSize: '1.1rem', fontWeight: 800 }}>
                 BOT PayLink Protocol Whitepaper
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                Decentralized Merchant Payment Protocol — Bohr Chain v1.0
+                Decentralized Merchant Payment Protocol — BotChain v1.0
               </div>
             </div>
           </div>
@@ -102,18 +101,18 @@ export default function WhitepaperModal({ onClose, contractAddress }) {
                 Verified On-Chain Contract
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                {contractAddress || '0xb66140aDF4712c46485fE44ADE219aC2bF8cC700'}
+                {contractAddress || '0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1'}
               </div>
             </div>
 
             <a
-              href={`${EXPLORER_URL}/address/${contractAddress || '0xb66140aDF4712c46485fE44ADE219aC2bF8cC700'}#code`}
+              href={`${EXPLORER_URL}/address/${contractAddress || '0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1'}#code`}
               target="_blank"
               rel="noreferrer"
               className="btn btn-secondary"
               style={{ fontSize: '0.78rem', padding: '0.45rem 0.85rem' }}
             >
-              <span>View BohrScan Verification</span>
+              <span>View BotChainScan Verification</span>
               <ExternalLink size={13} />
             </a>
           </div>
@@ -123,7 +122,7 @@ export default function WhitepaperModal({ onClose, contractAddress }) {
             1. Abstract & Motivation
           </h3>
           <p style={{ marginBottom: '1.25rem' }}>
-            Peer-to-peer cryptocurrency payments often suffer from address poisoning, manual transcription errors, clipboard hijacking, and merchant reconciliation disputes. The <strong>BOT PayLink Protocol</strong> provides a trustless, non-custodial smart contract infrastructure on Bohr Chain that cryptographically binds payment requests to their designated recipient, currency, and exact amount.
+            Peer-to-peer cryptocurrency payments often suffer from address poisoning, manual transcription errors, clipboard hijacking, and merchant reconciliation disputes. The <strong>BOT PayLink Protocol</strong> provides a trustless, non-custodial smart contract infrastructure on BotChain that cryptographically binds payment requests to their designated recipient, currency, and exact amount.
           </p>
 
           {/* Section 2: Cryptographic Binding */}
@@ -189,7 +188,7 @@ export default function WhitepaperModal({ onClose, contractAddress }) {
 
           {/* Section 4: Specifications */}
           <h3 style={{ color: 'var(--text-primary)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-            4. Bohr Chain Specifications
+            4. BotChain Mainnet Specifications
           </h3>
           <div style={{
             background: 'var(--bg-card-subtle)',
@@ -199,12 +198,12 @@ export default function WhitepaperModal({ onClose, contractAddress }) {
             marginBottom: '1.25rem'
           }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', fontSize: '0.82rem' }}>
-              <div><strong>Network:</strong> Bohr Testnet</div>
-              <div><strong>Chain ID:</strong> 968</div>
+              <div><strong>Network:</strong> BotChain Mainnet</div>
+              <div><strong>Chain ID:</strong> 677</div>
               <div><strong>Native Currency:</strong> BOT (18 Decimals)</div>
-              <div><strong>RPC URL:</strong> https://rpc.bohr.life</div>
+              <div><strong>RPC URL:</strong> https://rpc.botchain.ai</div>
               <div><strong>Compiler:</strong> Solidity 0.8.20</div>
-              <div><strong>Status:</strong> Verified on BohrScan</div>
+              <div><strong>Status:</strong> Verified on BotChainScan</div>
             </div>
           </div>
         </div>

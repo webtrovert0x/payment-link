@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAccount } from 'wagmi';
 import { useAppKit } from '@reown/appkit/react';
-import { getContractAddress, EXPLORER_URL } from '../services/contractConfig.js';
+import { getContractAddress, EXPLORER_URL, CHAIN_ID, NETWORK_NAME } from '../services/contractConfig.js';
 import { 
   Link2, 
   Wallet, 
@@ -12,7 +12,8 @@ import {
   AlertCircle,
   PlusCircle,
   CreditCard,
-  FileText
+  FileText,
+  ShieldCheck
 } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, onOpenSettings, onOpenWhitepaper }) {
@@ -47,19 +48,18 @@ export default function Navbar({ activeTab, setActiveTab, onOpenSettings, onOpen
               userSelect: 'none'
             }}
           >
-            <div style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #c084fc 0%, #7e22ce 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 0 20px rgba(192, 132, 252, 0.35)',
-              color: '#0d0f14'
-            }}>
-              <Link2 size={24} strokeWidth={2.6} />
-            </div>
+            <img 
+              src="/botchain_logo.jpeg" 
+              alt="BOT Chain Logo" 
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '12px',
+                boxShadow: '0 0 20px rgba(52, 211, 153, 0.4)',
+                border: '1.5px solid rgba(52, 211, 153, 0.3)',
+                objectFit: 'cover'
+              }}
+            />
             <div>
               <div style={{ 
                 fontSize: '1.2rem', 
@@ -78,7 +78,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenSettings, onOpen
                   border: '1px solid rgba(192, 132, 252, 0.3)',
                   borderRadius: '999px',
                   fontWeight: 700
-                }}>Bohr 968</span>
+                }}>BotChain 677</span>
               </div>
               <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
                 Decentralized Merchant Payment Protocol
@@ -140,9 +140,9 @@ export default function Navbar({ activeTab, setActiveTab, onOpenSettings, onOpen
           <button
             onClick={onOpenSettings}
             style={{
-              background: contractAddress ? 'rgba(52, 211, 153, 0.08)' : 'rgba(251, 191, 36, 0.1)',
-              border: `1px solid ${contractAddress ? 'rgba(52, 211, 153, 0.25)' : 'rgba(251, 191, 36, 0.3)'}`,
-              color: contractAddress ? 'var(--color-success)' : 'var(--color-warning)',
+              background: 'rgba(52, 211, 153, 0.08)',
+              border: '1px solid rgba(52, 211, 153, 0.25)',
+              color: 'var(--color-success)',
               borderRadius: 'var(--radius-md)',
               padding: '0.55rem 0.85rem',
               fontSize: '0.82rem',
@@ -151,22 +151,12 @@ export default function Navbar({ activeTab, setActiveTab, onOpenSettings, onOpen
               alignItems: 'center',
               gap: '0.45rem',
               cursor: 'pointer',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
             }}
-            title="Configure or view PaymentLink contract address"
+            title="View verified BotChain Mainnet contract details"
           >
-            {contractAddress ? (
-              <>
-                <CheckCircle2 size={15} />
-                <span>Contract Connected</span>
-              </>
-            ) : (
-              <>
-                <AlertCircle size={15} />
-                <span>Contract Not Configured</span>
-              </>
-            )}
-            <Settings size={14} style={{ opacity: 0.8 }} />
+            <ShieldCheck size={15} />
+            <span>Verified Contract</span>
           </button>
 
           {/* AppKit Connect Wallet Button */}

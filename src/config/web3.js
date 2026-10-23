@@ -2,26 +2,26 @@ import { createAppKit } from '@reown/appkit/react';
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
 import { defineChain } from 'viem';
 
-export const bohrTestnet = defineChain({
-  id: 968,
-  name: 'Bohr Testnet',
+export const botchainMainnet = defineChain({
+  id: 677,
+  name: 'BotChain Mainnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'Bohr Token',
+    name: 'BOT Token',
     symbol: 'BOT',
   },
   rpcUrls: {
-    default: { http: ['https://rpc.bohr.life'] },
+    default: { http: ['https://rpc.botchain.ai'] },
   },
   blockExplorers: {
-    default: { name: 'BohrScan', url: 'https://scan.bohr.life' },
+    default: { name: 'BotChainScan', url: 'https://scan.botchain.ai' },
   },
 });
 
 export const projectId =
   import.meta.env.VITE_REOWN_PROJECT_ID || '3fcc6bba2d1de962d911bb5b5c3dba68';
 
-export const networks = [bohrTestnet];
+export const networks = [botchainMainnet];
 
 export const wagmiAdapter = new WagmiAdapter({
   projectId,
@@ -34,8 +34,8 @@ createAppKit({
   projectId,
   metadata: {
     name: 'BOT Payment Link',
-    description: 'Decentralized Merchant Payment Links on Bohr Chain',
-    url: typeof window !== 'undefined' ? window.location.origin : 'https://paymentlink.bohr.life',
+    description: 'Decentralized Merchant Payment Links on BotChain',
+    url: typeof window !== 'undefined' ? window.location.origin : 'https://scan.botchain.ai',
     icons: ['https://avatars.githubusercontent.com/u/179229932'],
   },
   features: {

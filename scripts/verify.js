@@ -30,8 +30,9 @@ async function main() {
   params.append('runs', '200');
   params.append('sourceCode', sourceCode);
 
-  const endpoint = 'https://scan.bohr.life/api';
-  console.log(`📤 Submitting verification payload to BohrScan API (${endpoint})...`);
+  const explorerBase = 'https://scan.botchain.ai';
+  const endpoint = `${explorerBase}/api`;
+  console.log(`📤 Submitting verification payload to BotChainScan API (${endpoint})...`);
 
   try {
     const response = await fetch(endpoint, {
@@ -62,18 +63,18 @@ async function main() {
       for (let i = 0; i < 15; i++) {
         await new Promise((res) => setTimeout(res, 4000));
         try {
-          const statusRes = await fetch(`https://scan.bohr.life/api/v2/smart-contracts/${contractAddress}`);
+          const statusRes = await fetch(`${explorerBase}/api/v2/smart-contracts/${contractAddress}`);
           if (statusRes.ok) {
             const contractInfo = await statusRes.json();
             if (contractInfo.is_verified) {
-              console.log('✅ Contract is now officially VERIFIED on BohrScan!');
-              console.log(`🔗 Explorer URL: https://scan.bohr.life/address/${contractAddress}#code`);
+              console.log(`✅ Contract is now officially VERIFIED on BotChainScan!`);
+              console.log(`🔗 Explorer URL: ${explorerBase}/address/${contractAddress}#code`);
               return;
             }
           }
         } catch {}
       }
-      console.log(`ℹ️ Contract submitted. View status at: https://scan.bohr.life/address/${contractAddress}#code`);
+      console.log(`ℹ️ Contract submitted. View status at: ${explorerBase}/address/${contractAddress}#code`);
     } else {
       console.log('API output:', data);
     }

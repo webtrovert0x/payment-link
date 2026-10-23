@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { ethers } from 'ethers';
-import { getContractAddress, PAYMENT_LINK_ABI, EXPLORER_URL } from '../services/contractConfig.js';
+import { getContractAddress, PAYMENT_LINK_ABI, EXPLORER_URL, NETWORK_NAME } from '../services/contractConfig.js';
 import { fetchMerchantLinks } from '../services/contractClient.js';
 import ShareModal from './ShareModal.jsx';
 import ReceiptsModal from './ReceiptsModal.jsx';
@@ -341,7 +341,7 @@ export default function MerchantDashboard({ onSelectLinkForPay, contractAddress,
                 <span>Contract Not Deployed Yet</span>
               </div>
               <p style={{ color: 'var(--text-muted)', lineHeight: '1.4' }}>
-                Run <code>npm run deploy</code> in your terminal with your <code>PRIVATE_KEY</code> in <code>.env</code>, or click below to configure.
+                Connecting to the official PaymentLink protocol on BotChain Mainnet...
               </p>
               <button
                 type="button"
@@ -349,7 +349,7 @@ export default function MerchantDashboard({ onSelectLinkForPay, contractAddress,
                 className="btn-secondary"
                 style={{ alignSelf: 'flex-start', fontSize: '0.78rem', padding: '0.35rem 0.65rem' }}
               >
-                Configure Address
+                View Contract Details
               </button>
             </div>
           )}
@@ -359,7 +359,7 @@ export default function MerchantDashboard({ onSelectLinkForPay, contractAddress,
             <div className="form-group">
               <label className="form-label">
                 <span>Requested Amount (BOT) *</span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--purple-primary)' }}>Native Bohr Token</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--purple-primary)' }}>Native BOT Token</span>
               </label>
               <input
                 type="number"
@@ -572,7 +572,7 @@ export default function MerchantDashboard({ onSelectLinkForPay, contractAddress,
           ) : loadingLinks ? (
             <div className="glass-card" style={{ padding: '3.5rem 2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
               <Loader2 size={36} style={{ animation: 'spin 1.5s linear infinite', margin: '0 auto 1rem', color: 'var(--purple-primary)' }} />
-              <p>Fetching on-chain payment requests from Bohr Chain...</p>
+              <p>Fetching on-chain payment requests from {NETWORK_NAME}...</p>
             </div>
           ) : links.length === 0 ? (
             <div className="glass-card" style={{ padding: '3.5rem 2rem', textAlign: 'center' }}>

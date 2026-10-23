@@ -1,8 +1,8 @@
 {
-  "address": "0xb66140aDF4712c46485fE44ADE219aC2bF8cC700",
-  "chainId": 968,
-  "networkName": "Bohr Testnet",
-  "rpcUrl": "https://rpc.bohr.life",
-  "deployedAt": "2026-10-16T08:06:37.937Z",
+  "address": "0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1",
+  "chainId": 677,
+  "networkName": "BotChain Mainnet",
+  "rpcUrl": "https://rpc.botchain.ai",
+  "deployedAt": "2026-10-23T10:35:21.416Z",
   "deployer": "0x55DA37AbbF8C9141adA4Dd1C2eF7211c0483eC16"
 }

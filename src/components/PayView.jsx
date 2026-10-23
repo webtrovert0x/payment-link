@@ -4,7 +4,7 @@ import { useAppKit } from '@reown/appkit/react';
 import { ethers } from 'ethers';
 import confetti from 'canvas-confetti';
 import { fetchPaymentLink } from '../services/contractClient.js';
-import { getContractAddress, PAYMENT_LINK_ABI, EXPLORER_URL } from '../services/contractConfig.js';
+import { getContractAddress, PAYMENT_LINK_ABI, EXPLORER_URL, CHAIN_ID, NETWORK_NAME } from '../services/contractConfig.js';
 import { 
   CreditCard, 
   ShieldCheck, 
@@ -60,7 +60,7 @@ export default function PayView({ initialLinkId, onBackToMerchant, contractAddre
       setLinkData(data);
     } catch (err) {
       console.error('Error fetching link:', err);
-      setError('Unable to load payment link. Please verify the contract is deployed and network is Bohr Testnet.');
+      setError(`Unable to load payment link. Please verify the contract is deployed and network is ${NETWORK_NAME}.`);
       setLinkData(null);
     } finally {
       setLoading(false);
@@ -217,7 +217,7 @@ export default function PayView({ initialLinkId, onBackToMerchant, contractAddre
       {loading && (
         <div className="glass-card" style={{ padding: '4rem 2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
           <Loader2 size={36} style={{ animation: 'spin 1.5s linear infinite', margin: '0 auto 1rem', color: 'var(--purple-primary)' }} />
-          <p>Verifying payment request on Bohr Chain...</p>
+          <p>Verifying payment request on {NETWORK_NAME}...</p>
         </div>
       )}
 
@@ -274,7 +274,7 @@ export default function PayView({ initialLinkId, onBackToMerchant, contractAddre
               {linkData.paymentRef}
             </h1>
             <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
-              Created on Bohr Testnet • {linkData.createdAtDate.toLocaleDateString()}
+              Created on {NETWORK_NAME} • {linkData.createdAtDate.toLocaleDateString()}
             </div>
 
             <div style={{
@@ -289,8 +289,12 @@ export default function PayView({ initialLinkId, onBackToMerchant, contractAddre
               <span style={{ fontSize: '0.8rem', color: 'var(--purple-light)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
                 Amount Due
               </span>
-              <div style={{ fontSize: '2.8rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
-                {linkData.amountFormatted} <span style={{ fontSize: '1.4rem', color: 'var(--purple-primary)' }}>BOT</span>
+              <div style={{ fontSize: '2.8rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.03em', lineHeight: 1.1, display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                <span>{linkData.amountFormatted}</span>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <img src="/botchain_logo.jpeg" alt="BOT" style={{ width: '30px', height: '30px', borderRadius: '50%', border: '1.5px solid rgba(52, 211, 153, 0.4)', objectFit: 'cover' }} />
+                  <span style={{ fontSize: '1.4rem', color: 'var(--purple-primary)' }}>BOT</span>
+                </div>
               </div>
             </div>
           </div>
@@ -368,7 +372,7 @@ export default function PayView({ initialLinkId, onBackToMerchant, contractAddre
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ color: 'var(--text-muted)' }}>Network:</span>
               <span style={{ fontWeight: 600, color: 'var(--purple-light)' }}>
-                Bohr Testnet (Chain ID 968)
+                {NETWORK_NAME} (Chain ID {CHAIN_ID})
               </span>
             </div>
           </div>
@@ -388,7 +392,7 @@ export default function PayView({ initialLinkId, onBackToMerchant, contractAddre
                 Payment Successful!
               </h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', marginBottom: '1rem' }}>
-                Funds have been directly delivered to the designated merchant recipient on Bohr Chain.
+                Funds have been directly delivered to the designated merchant recipient on {NETWORK_NAME}.
               </p>
 
               <div style={{
@@ -413,7 +417,7 @@ export default function PayView({ initialLinkId, onBackToMerchant, contractAddre
                   style={{ fontSize: '0.82rem', padding: '0.5rem 1rem' }}
                 >
                   <ExternalLink size={14} />
-                  <span>View on BohrScan</span>
+                  <span>View on BotChainScan</span>
                 </a>
               </div>
             </div>

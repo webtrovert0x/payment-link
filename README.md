@@ -1,11 +1,11 @@
 # 💎 BOT PayLink — Decentralized Merchant Payment Protocol
 
-[![Network: Bohr Testnet](https://img.shields.io/badge/Network-Bohr%20Testnet%20(968)-a855f7?style=for-the-badge)](https://scan.bohr.life)
-[![Contract Verified](https://img.shields.io/badge/BohrScan-Verified%20Contract-34d399?style=for-the-badge)](https://scan.bohr.life/address/0xb66140aDF4712c46485fE44ADE219aC2bF8cC700#code)
+[![Network: BotChain Mainnet](https://img.shields.io/badge/Network-BotChain%20Mainnet%20(677)-a855f7?style=for-the-badge)](https://scan.botchain.ai)
+[![Contract Verified](https://img.shields.io/badge/BotChainScan-Verified%20Contract-34d399?style=for-the-badge)](https://scan.botchain.ai/address/0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1#code)
 [![Solidity: 0.8.20](https://img.shields.io/badge/Solidity-0.8.20-blue?style=for-the-badge)](https://soliditylang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](./LICENSE)
 
-A high-performance, non-custodial decentralized payment link protocol on **Bohr Chain (Chain ID: 968)**. Lets merchants, freelancers, developers, and online sellers create tamper-proof payment requests, share custom URLs or QR codes, and receive direct payments with automated on-chain receipts.
+A high-performance, non-custodial decentralized payment link protocol on **BotChain (Chain ID: 677)**. Lets merchants, freelancers, developers, and online sellers create tamper-proof payment requests, share custom URLs or QR codes, and receive direct payments with automated on-chain receipts.
 
 ---
 
@@ -24,29 +24,29 @@ A high-performance, non-custodial decentralized payment link protocol on **Bohr 
 
 ## 🔍 Verified Contract Details
 
-The `PaymentLink.sol` smart contract is officially compiled and verified on BohrScan:
+The `PaymentLink.sol` smart contract is officially compiled and verified on BotChainScan:
 
 | Parameter | Value |
 |---|---|
 | **Contract Name** | `PaymentLink` |
-| **Contract Address** | [`0xb66140aDF4712c46485fE44ADE219aC2bF8cC700`](https://scan.bohr.life/address/0xb66140aDF4712c46485fE44ADE219aC2bF8cC700#code) |
+| **Mainnet Address** | [`0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1`](https://scan.botchain.ai/address/0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1#code) |
 | **Compiler Version** | `v0.8.20+commit.a1b79de6` |
 | **Optimization** | Enabled (200 runs) |
 | **Verification Status** | **Verified (Pass)** |
-| **BohrScan Explorer** | [View Verified Source & ABI](https://scan.bohr.life/address/0xb66140aDF4712c46485fE44ADE219aC2bF8cC700#code) |
+| **BotChainScan Explorer** | [View Verified Source & ABI on BotChainScan](https://scan.botchain.ai/address/0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1#code) |
 
 ---
 
 ## 🌐 Network Specifications
 
-| Parameter | Configuration |
+| Parameter | BotChain Mainnet |
 |---|---|
-| **Network Name** | Bohr Testnet |
-| **Chain ID** | `968` |
+| **Chain ID** | `677` |
 | **Currency Symbol** | `BOT` |
 | **Currency Decimals** | `18` |
-| **RPC Endpoint** | `https://rpc.bohr.life` |
-| **Block Explorer** | `https://scan.bohr.life` |
+| **RPC Endpoint** | `https://rpc.botchain.ai` |
+| **Block Explorer** | `https://scan.botchain.ai` |
+| **Target Block Time** | `~3 seconds` |
 
 ---
 
@@ -121,9 +121,9 @@ cp .env.example .env
 Edit `.env` with your deployment private key (never commit this file):
 ```env
 PRIVATE_KEY=your_private_key_here
-RPC_URL=https://rpc.bohr.life
-CHAIN_ID=968
-VITE_PAYMENT_LINK_ADDRESS=0xb66140aDF4712c46485fE44ADE219aC2bF8cC700
+RPC_URL=https://rpc.botchain.ai
+CHAIN_ID=677
+VITE_PAYMENT_LINK_ADDRESS=0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1
 VITE_REOWN_PROJECT_ID=3fcc6bba2d1de962d911bb5b5c3dba68
 ```
 
@@ -134,8 +134,8 @@ VITE_REOWN_PROJECT_ID=3fcc6bba2d1de962d911bb5b5c3dba68
 | Command | Action |
 |---|---|
 | `npm run compile` | Compiles `contracts/PaymentLink.sol` using solc 0.8.20 and outputs artifacts to `src/contracts/` |
-| `npm run deploy` | Deploys the contract to Bohr Testnet, writes `deployedAddress.json`, and updates `.env` |
-| `npm run verify` | Submits source code and verifies the deployed contract on BohrScan via API |
+| `npm run deploy` | Deploys the contract to BotChain Mainnet, writes `deployedAddress.json`, and updates `.env` |
+| `npm run verify` | Submits source code and verifies the deployed contract on BotChainScan via API |
 | `npm run dev` | Starts the Vite local development server at `http://localhost:5173` |
 | `npm run build` | Builds the optimized production frontend bundle in `dist/` |
 | `npm run preview` | Previews the production build locally |

@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function main() {
-  const rpcUrl = process.env.RPC_URL || 'https://rpc.bohr.life';
+  const rpcUrl = process.env.RPC_URL || 'https://rpc.botchain.ai';
   const privateKey = process.env.PRIVATE_KEY;
 
   if (!privateKey) {
@@ -44,7 +44,7 @@ async function main() {
   const artifact = JSON.parse(fs.readFileSync(artifactPath, 'utf8'));
   const factory = new ethers.ContractFactory(artifact.abi, artifact.bytecode, wallet);
 
-  console.log('🚀 Deploying PaymentLink contract to Bohr Chain...');
+  console.log('🚀 Deploying PaymentLink contract to BotChain Mainnet...');
   const contract = await factory.deploy();
   await contract.waitForDeployment();
 
@@ -55,7 +55,7 @@ async function main() {
   const deployedConfig = {
     address: deployedAddress,
     chainId: Number(network.chainId),
-    networkName: 'Bohr Testnet',
+    networkName: 'BotChain Mainnet',
     rpcUrl: rpcUrl,
     deployedAt: new Date().toISOString(),
     deployer: wallet.address,

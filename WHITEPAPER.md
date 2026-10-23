@@ -1,10 +1,10 @@
-# BOT PayLink Protocol: Decentralized Non-Custodial Merchant Payment System on Bohr Chain
+# BOT PayLink Protocol: Decentralized Non-Custodial Merchant Payment System on BotChain
 **Technical Whitepaper — Version 1.0.0**  
-**Author**: Bohr Protocol Engineering Working Group  
-**Status**: Mainnet / Testnet Active (Chain ID: 968)  
+**Author**: BotChain Protocol Engineering Working Group  
+**Status**: Mainnet Active (Chain ID: 677)  
 **Smart Contract**: `PaymentLink.sol`  
-**Verified Contract Address**: `0xb66140aDF4712c46485fE44ADE219aC2bF8cC700`  
-**BohrScan Explorer**: [https://scan.bohr.life/address/0xb66140aDF4712c46485fE44ADE219aC2bF8cC700#code](https://scan.bohr.life/address/0xb66140aDF4712c46485fE44ADE219aC2bF8cC700#code)
+**Verified Mainnet Address**: `0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1`  
+**BotChainScan Explorer**: [https://scan.botchain.ai/address/0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1#code](https://scan.botchain.ai/address/0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1#code)
 
 ---
 
@@ -12,7 +12,7 @@
 
 Decentralized peer-to-peer commerce frequently suffers from user friction, human error during manual address copying, clipboard poisoning, and price-settlement ambiguities. Existing custodial merchant payment gateways reintroduce centralized counterparty risk, custodial delays, and fee extraction. 
 
-The **BOT PayLink Protocol** introduces a trustless, non-custodial smart contract infrastructure on **Bohr Chain** that allows merchants, freelancers, developers, and automated services to generate deterministic, cryptographically bound payment requests. Each link locks the recipient address, payment token, required value, and expiry parameters into an immutable on-chain state machine. Customers connect their EVM wallet and fulfill payments in a single transaction with immediate direct-to-merchant settlement. This paper outlines the mathematical, architectural, and security model of the protocol, formally proving protection against parameter tampering, reentrancy, front-running, and double-spending.
+The **BOT PayLink Protocol** introduces a trustless, non-custodial smart contract infrastructure on **BotChain** that allows merchants, freelancers, developers, and automated services to generate deterministic, cryptographically bound payment requests. Each link locks the recipient address, payment token, required value, and expiry parameters into an immutable on-chain state machine. Customers connect their EVM wallet and fulfill payments in a single transaction with immediate direct-to-merchant settlement. This paper outlines the mathematical, architectural, and security model of the protocol, formally proving protection against parameter tampering, reentrancy, front-running, and double-spending.
 
 ---
 
@@ -31,7 +31,7 @@ The BOT PayLink Protocol satisfies five core tenets:
 * **Cryptographic Tamper-Proof Binding**: Payment parameters (recipient, currency, exact amount, and maximum redemptions) cannot be modified after link creation.
 * **Determinism & Idempotency**: Single-use links cannot be drained or double-paid.
 * **Deterministic On-Chain Receipts**: Structured event logs and stateful receipt arrays store payer notes, exact block timestamps, and payment reference numbers.
-* **Minimal Gas Overhead**: Optimized Solidity compilation yielding minimal execution fees on Bohr Chain.
+* **Minimal Gas Overhead**: Optimized Solidity compilation yielding minimal execution fees on BotChain.
 
 ---
 
@@ -44,7 +44,7 @@ Each payment link is identified by a unique 32-byte hash ($H_{link}$) computed v
 $$H_{link} = \text{keccak256}\Big(\text{chainid} \parallel \text{address}(this) \parallel \text{merchant} \parallel \text{recipient} \parallel \text{token} \parallel \text{amount} \parallel \nu_{merchant} \parallel t_{creation}\Big)$$
 
 Where:
-* $\text{chainid} = 968$ (Bohr Network, EIP-155 replay protection).
+* $\text{chainid} = 677$ (BotChain Mainnet, EIP-155 replay protection).
 * $\nu_{merchant} \in \mathbb{N}_{\ge 0}$ is an auto-incrementing nonce managed per merchant account.
 * $\text{token} = 0x0000000000000000000000000000000000000000$ specifies native **BOT**, or an ERC20 contract address.
 
@@ -158,24 +158,24 @@ function cancelPaymentLink(bytes32 linkId) external;
 | **Recipient Substitution** | Attacker intercepts or modifies recipient in frontend payload. | **Guaranteed on-chain**: Recipient is etched in contract storage under the keccak256 hash. Customers pay into the contract, which transfers directly to the stored recipient. |
 | **Price Tampering** | Customer underpays or alters expected token units. | **Strict Value Equality**: `require(msg.value == link.amount)` ensures exact wei-level precision. |
 | **Reentrancy Attack** | Malicious recipient contract attempts recursive callback during transfer. | **Checks-Effects-Interactions & Mutex**: State counters (`paidCount`) are incremented *prior* to external transfer; guarded with custom `nonReentrant` modifier. |
-| **Replay across Chains** | Attacker replays payload on another EVM network. | **EIP-155 Domain Binding**: Contract binds `block.chainid` (968 for Bohr) directly into link hash generation. |
+| **Replay across Chains** | Attacker replays payload on another EVM network. | **EIP-155 Domain Binding**: Contract binds `block.chainid` (677 for BotChain) directly into link hash generation. |
 | **Front-Running / MEV** | Searcher attempts to frontrun link payment. | Payment execution is idempotent and benefits solely the designated recipient. Single-use lock rejects duplicate attempts. |
 | **Double Spending** | Customer attempts multiple rapid payments to single-use link. | `paidCount` is checked at state onset; any subsequent execution fails on `paidCount == 0`. |
 
 ---
 
-## 6. Bohr Chain Network Parameters
+## 6. BotChain Network Parameters
 
 The BOT PayLink Protocol operates with the following network configurations:
 
-* **Network Name**: Bohr Testnet
-* **Chain ID**: `968`
+* **Network Name**: BotChain Mainnet
+* **Chain ID**: `677`
 * **Consensus Mechanism**: Proof-of-Authority / High-throughput EVM
 * **Native Currency**: `BOT` (18 Decimals)
-* **RPC Endpoint**: `https://rpc.bohr.life`
-* **Block Explorer**: `https://scan.bohr.life`
+* **RPC Endpoint**: `https://rpc.botchain.ai`
+* **Block Explorer**: `https://scan.botchain.ai`
 * **Target Block Time**: ~3 seconds
-* **Contract Address**: `0xb66140aDF4712c46485fE44ADE219aC2bF8cC700`
+* **Verified Mainnet Address**: `0xAC433aE018ed27EB4D081A0D4C61b6BCE08c9ae1`
 
 ---
 
@@ -184,7 +184,7 @@ The BOT PayLink Protocol operates with the following network configurations:
 ### 7.1 Shareable Link Format
 Merchant links resolve using deterministic web URLs:
 ```
-https://paylink.bohr.life/?link=0x746f6b656e...
+https://paylink.botchain.ai/?link=0x746f6b656e...
 ```
 Where the URL query parameter `link` contains the `bytes32` identifier.
 
@@ -195,7 +195,7 @@ The merchant interface dynamically renders ISO/IEC 18004 compliant QR codes enco
 
 ## 8. Conclusion
 
-The **BOT PayLink Protocol** provides a bulletproof foundation for Web3 commerce on Bohr Chain. By combining on-chain cryptographic binding, instantaneous non-custodial settlement, and zero-leakage security architectures, the protocol bridges the gap between decentralized smart contracts and real-world commercial usability.
+The **BOT PayLink Protocol** provides a bulletproof foundation for Web3 commerce on BotChain. By combining on-chain cryptographic binding, instantaneous non-custodial settlement, and zero-leakage security architectures, the protocol bridges the gap between decentralized smart contracts and real-world commercial usability.
 
 ---
-*© 2026 Bohr Protocol. All source code released under the MIT Open Source License.*
+*© 2026 BOT PayLink Protocol. All source code released under the MIT Open Source License.*
