@@ -49,14 +49,14 @@ export default function Navbar({ activeTab, setActiveTab, onOpenSettings, onOpen
             }}
           >
             <img 
-              src="/botchain_logo.jpeg" 
-              alt="BOT Chain Logo" 
+              src="/paymentlink_icon.svg" 
+              alt="BOT PayLink Logo" 
               style={{
                 width: '42px',
                 height: '42px',
                 borderRadius: '12px',
-                boxShadow: '0 0 20px rgba(52, 211, 153, 0.4)',
-                border: '1.5px solid rgba(52, 211, 153, 0.3)',
+                boxShadow: '0 0 20px rgba(192, 132, 252, 0.4)',
+                border: '1.5px solid rgba(192, 132, 252, 0.3)',
                 objectFit: 'cover'
               }}
             />

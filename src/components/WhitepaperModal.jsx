@@ -40,13 +40,13 @@ export default function WhitepaperModal({ onClose, contractAddress }) {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <img 
-              src="/botchain_logo.jpeg" 
-              alt="BOT Chain" 
+              src="/paymentlink_icon.svg" 
+              alt="BOT PayLink" 
               style={{
                 width: '38px',
                 height: '38px',
                 borderRadius: '10px',
-                border: '1.5px solid rgba(52, 211, 153, 0.4)',
+                border: '1.5px solid rgba(192, 132, 252, 0.4)',
                 objectFit: 'cover'
               }}
             />
